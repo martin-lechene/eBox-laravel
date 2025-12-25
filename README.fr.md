@@ -1,15 +1,15 @@
-# Package Laravel e-Box Enterprise
+# Laravel e-Box Enterprise Package
 
-Package officiel d'intégration Laravel pour le système de messagerie sécurisée e-Box du gouvernement belge.
+Official Laravel integration package for the Belgian government's secure e-Box messaging system.
 
-## 🎯 Conformité
+## 🎯 Compliance
 
-Ce package est **entièrement conforme** à la documentation technique disponible sur [dev.eboxenterprise.be](https://dev.eboxenterprise.be) :
+This package is **fully compliant** with the technical documentation available at [dev.eboxenterprise.be](https://dev.eboxenterprise.be):
 
-- ✅ **Authentification forte** via identifiants belges (CBE/NRN)
-- ✅ **Auditabilité complète** des messages et de leurs statuts
-- ✅ **Architecture décentralisée** avec deux profils d'intégration
-- ✅ **Confidentialité tunable** selon les besoins métier
+- ✅ **Strong authentication** via Belgian identifiers (CBE/NRN)
+- ✅ **Complete auditability** of messages and their statuses
+- ✅ **Decentralized architecture** with two integration profiles
+- ✅ **Tunable confidentiality** according to business needs
 
 ## 📦 Installation
 
@@ -17,85 +17,85 @@ Ce package est **entièrement conforme** à la documentation technique disponibl
 composer require martin-lechene/ebox-laravel
 ```
 
-Publier les fichiers de configuration et migrations :
+Publish configuration files and migrations:
 
 ```bash
 php artisan vendor:publish --provider="Ebox\\Enterprise\\Providers\\EboxServiceProvider"
 ```
 
-Exécuter les migrations :
+Run migrations:
 
 ```bash
 php artisan migrate
 ```
 
-Configurer les variables d'environnement :
+Configure environment variables:
 
 ```env
-# Profil d'intégration (central|private)
+# Integration profile (central|private)
 EBOX_INTEGRATION_PROFILE=central
 
-# Registre central e-Box
-EBOX_CENTRAL_API_KEY=votre_cle_api
-EBOX_CENTRAL_API_SECRET=votre_secret
+# Central e-Box registry
+EBOX_CENTRAL_API_KEY=your_api_key
+EBOX_CENTRAL_API_SECRET=your_secret
 
-# Registre privé (optionnel)
+# Private registry (optional)
 EBOX_PRIVATE_REGISTRY_ENABLED=false
-EBOX_PRIVATE_REGISTRY_ENDPOINT=https://votre-registre.prive
+EBOX_PRIVATE_REGISTRY_ENDPOINT=https://your-private.registry
 ```
 
-## 🚀 Utilisation rapide
+## 🚀 Quick Start
 
-### Envoi d'un message
+### Sending a message
 
 ```php
 use Ebox\Enterprise\Facades\Ebox;
 use Ebox\Enterprise\Core\Enums\IntegrationProfile;
 
 $message = Ebox::sendMessage([
-    'sender_identifier' => '0123456789', // CBE entreprise
+    'sender_identifier' => '0123456789', // CBE company
     'sender_type' => 'CBE',
-    'sender_name' => 'Votre Entreprise SPRL',
-    'recipient_identifier' => '12345678901', // NRN citoyen
+    'sender_name' => 'Your Company SPRL',
+    'recipient_identifier' => '12345678901', // NRN citizen
     'recipient_type' => 'NRN',
-    'recipient_name' => 'Jean Dupont',
-    'subject' => 'Facture du trimestre',
-    'body' => 'Veuillez trouver ci-joint votre facture...',
-    'integration_profile' => 'central', // ou 'private' pour confidentialité max
+    'recipient_name' => 'John Doe',
+    'subject' => 'Quarterly invoice',
+    'body' => 'Please find attached your invoice...',
+    'integration_profile' => 'central', // or 'private' for max confidentiality
     'confidentiality_level' => 'high',
 ]);
 
-echo "Message envoyé avec l'ID : " . $message->external_message_id;
+echo "Message sent with ID: " . $message->external_message_id;
 ```
 
-### Récupération du statut
+### Retrieving status
 
 ```php
 $status = Ebox::getMessageStatus('ebox_123456789');
 
-echo "Statut : " . $status['status'];
-echo "Délivré le : " . $status['delivered_at'];
-echo "Lu le : " . $status['read_at'];
+echo "Status: " . $status['status'];
+echo "Delivered at: " . $status['delivered_at'];
+echo "Read at: " . $status['read_at'];
 ```
 
-### Configuration d'un registre privé
+### Configuring a private registry
 
 ```php
 $registry = Ebox::createRegistry([
-    'name' => 'Notre registre privé',
+    'name' => 'Our private registry',
     'type' => 'private',
-    'endpoint_url' => 'https://registre.interne.be',
+    'endpoint_url' => 'https://internal.registry.be',
     'supports_high_confidentiality' => true,
-    'api_key' => 'cle_secrete',
-    'api_secret' => 'secret_tres_secret',
+    'api_key' => 'secret_key',
+    'api_secret' => 'very_secret',
 ]);
 ```
 
-## 📡 API REST
+## 📡 REST API
 
-Le package expose une API REST complète :
+The package exposes a complete REST API:
 
-### Envoyer un message
+### Send a message
 
 ```http
 POST /api/ebox/v1/messages
@@ -107,78 +107,77 @@ Authorization: Bearer {token}
     "sender_type": "CBE",
     "recipient_identifier": "12345678901",
     "recipient_type": "NRN",
-    "subject": "Notification officielle",
-    "body": "Contenu du message...",
+    "subject": "Official notification",
+    "body": "Message content...",
     "integration_profile": "central"
 }
 ```
 
-### Consulter un statut
+### Check status
 
 ```http
 GET /api/ebox/v1/status/{messageId}
 Authorization: Bearer {token}
 ```
 
-## 🔒 Sécurité
+## 🔒 Security
 
-### Authentification forte
+### Strong authentication
 
-Toutes les opérations nécessitent une identité belge valide (CBE pour les entreprises, NRN pour les citoyens).
+All operations require a valid Belgian identity (CBE for companies, NRN for citizens).
 
-### Confidentialité
+### Confidentiality
 
-Trois niveaux disponibles :
+Three levels available:
 
-- **Standard** : Passage par les serveurs e-Box
-- **High** : Chiffrement de bout en bout
-- **Maximum** : Registre privé, aucun passage par des tiers
+- **Standard**: Routing through e-Box servers
+- **High**: End-to-end encryption
+- **Maximum**: Private registry, no third-party routing
 
 ### Audit
 
-Toutes les actions sont loguées avec :
+All actions are logged with:
 
-- Horodatage précis
-- Identité de l'acteur
-- Adresse IP et user agent
-- Détails complets de l'opération
+- Precise timestamp
+- Actor identity
+- IP address and user agent
+- Complete operation details
 
-## 🧪 Tests
+## 🧪 Testing
 
 ```bash
-# Tests unitaires
+# Unit tests
 php artisan test --testsuite=Unit
 
-# Tests fonctionnels
+# Functional tests
 php artisan test --testsuite=Feature
 
-# Tests avec couverture
+# Tests with coverage
 php artisan test --coverage
 ```
 
 ## 📊 Monitoring
 
-Le package inclut :
+The package includes:
 
-- ✅ Logs structurés (Monolog)
-- ✅ Métriques Prometheus
-- ✅ Webhooks pour notifications
-- ✅ Tableau de bord d'audit
+- ✅ Structured logs (Monolog)
+- ✅ Prometheus metrics
+- ✅ Webhooks for notifications
+- ✅ Audit dashboard
 
-## 🤝 Contribution
+## 🤝 Contributing
 
-1. Fork le projet
-2. Créez votre branche (git checkout -b feature/amazing-feature)
-3. Commit vos changements (git commit -m 'Add amazing feature')
-4. Push sur la branche (git push origin feature/amazing-feature)
-5. Ouvrez une Pull Request
+1. Fork the project
+2. Create your branch (git checkout -b feature/amazing-feature)
+3. Commit your changes (git commit -m 'Add amazing feature')
+4. Push to the branch (git push origin feature/amazing-feature)
+5. Open a Pull Request
 
-## 📄 Licence
+## 📄 License
 
-MIT License. Voir le fichier LICENSE pour plus de détails.
+MIT License. See the LICENSE file for more details.
 
 ## 🆘 Support
 
-- Issues : GitHub Issues
-- Email : contact@doganddev.eu
-
+- Issues: GitHub Issues
+- Email: contact@doganddev.eu
