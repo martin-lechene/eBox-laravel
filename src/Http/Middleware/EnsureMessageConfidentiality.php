@@ -8,13 +8,13 @@ use Ebox\Enterprise\Core\Enums\ConfidentialityLevel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Middleware pour vérifier la confidentialité des messages
+ * Middleware to verify message confidentiality
  */
 class EnsureMessageConfidentiality
 {
     public function handle(Request $request, Closure $next): Response
     {
-        // Vérification si c'est une requête de lecture de message
+        // Check if this is a message read request
         if ($request->routeIs('ebox.messages.show')) {
             $messageId = $request->route('id');
             
@@ -22,18 +22,18 @@ class EnsureMessageConfidentiality
                 $message = \Ebox\Enterprise\Models\EboxMessage::find($messageId);
                 
                 if ($message && $message->confidentiality_level === ConfidentialityLevel::MAXIMUM) {
-                    // Vérification supplémentaire pour confidentialité maximale
+                    // Additional verification for maximum confidentiality
                     $user = $request->user();
                     
-                    // Vérifier que l'utilisateur est soit l'expéditeur soit le destinataire
+                    // Verify that the user is either the sender or the recipient
                     $isAuthorized = 
                         ($user->belgian_identity === $message->sender_identifier) ||
                         ($user->belgian_identity === $message->recipient_identifier);
                     
                     if (!$isAuthorized) {
                         return response()->json([
-                            'error' => 'Accès non autorisé',
-                            'message' => 'Ce message nécessite une autorisation spéciale',
+                            'error' => 'Unauthorized access',
+                            'message' => 'This message requires special authorization',
                         ], 403);
                     }
                 }

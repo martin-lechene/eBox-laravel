@@ -25,7 +25,7 @@ class StatusController extends Controller
     }
     
     /**
-     * Récupération du statut d'un message
+     * Get message status
      * GET /api/ebox/v1/status/{messageId}
      */
     public function getStatus(string $messageId)
@@ -47,7 +47,7 @@ class StatusController extends Controller
     }
     
     /**
-     * Historique des statuts d'un message
+     * Get message status history
      * GET /api/ebox/v1/status/{messageId}/history
      */
     public function getHistory(string $messageId)
@@ -65,7 +65,7 @@ class StatusController extends Controller
     }
     
     /**
-     * Logs d'audit d'un message
+     * Get message audit logs
      * GET /api/ebox/v1/status/{messageId}/audit
      */
     public function getAudit(string $messageId, Request $request)

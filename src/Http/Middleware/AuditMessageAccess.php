@@ -8,7 +8,7 @@ use Ebox\Enterprise\Services\Audit\AuditLogger;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Middleware pour auditer l'accès aux messages
+ * Middleware to audit message access
  */
 class AuditMessageAccess
 {
@@ -23,7 +23,7 @@ class AuditMessageAccess
     {
         $response = $next($request);
         
-        // Audit après la requête si c'est un accès à un message
+        // Audit after request if it's a message access
         if ($request->routeIs('ebox.messages.show') || $request->routeIs('ebox.messages.*')) {
             $messageId = $request->route('id');
             

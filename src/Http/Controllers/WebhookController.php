@@ -12,26 +12,26 @@ use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Controller pour les webhooks e-Box
+ * Controller for e-Box webhooks
  */
 class WebhookController extends Controller
 {
     public function __construct()
     {
-        // Pas d'authentification standard pour les webhooks
-        // Vérification par signature à implémenter
+        // No standard authentication for webhooks
+        // Signature verification to be implemented
     }
     
     /**
-     * Gestion des callbacks e-Box
+     * Handle e-Box callbacks
      * POST /api/ebox/webhooks/ebox/callback
      */
     public function handle(Request $request)
     {
-        // Vérification de la signature du webhook
+        // Verify webhook signature
         if (!$this->verifySignature($request)) {
             return response()->json([
-                'error' => 'Signature invalide',
+                'error' => 'Invalid signature',
             ], Response::HTTP_UNAUTHORIZED);
         }
         
@@ -57,7 +57,7 @@ class WebhookController extends Controller
                     break;
                     
                 default:
-                    Log::warning("Événement webhook inconnu", ['event' => $event]);
+                    Log::warning("Unknown webhook event", ['event' => $event]);
             }
             
             return response()->json([
@@ -65,13 +65,13 @@ class WebhookController extends Controller
             ]);
             
         } catch (\Exception $e) {
-            Log::error("Erreur lors du traitement du webhook", [
+            Log::error("Error processing webhook", [
                 'event' => $event,
                 'error' => $e->getMessage(),
             ]);
             
             return response()->json([
-                'error' => 'Erreur lors du traitement',
+                'error' => 'Error processing request',
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -129,7 +129,7 @@ class WebhookController extends Controller
         $secret = config('ebox.webhooks.secret');
         
         if (!$secret) {
-            return true; // Pas de vérification si pas de secret configuré
+            return true; // No verification if no secret configured
         }
         
         $signature = $request->header('X-Ebox-Signature');

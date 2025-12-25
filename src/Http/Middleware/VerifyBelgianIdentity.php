@@ -9,24 +9,24 @@ use Ebox\Enterprise\Core\Enums\IdentityType;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Middleware pour vérifier l'authentification forte via CBE/NRN
- * Conforme à la documentation e-Box
+ * Middleware to verify strong authentication via CBE/NRN
+ * Compliant with e-Box documentation
  */
 class VerifyBelgianIdentity
 {
     public function handle(Request $request, Closure $next): Response
     {
-        // Récupération de l'identité depuis le token d'authentification
+        // Retrieve identity from authentication token
         $user = $request->user();
         
         if (!$user || !$user->belgian_identity) {
             return response()->json([
-                'error' => 'Authentification forte requise',
-                'message' => 'Une identité belge (CBE/NRN) est requise pour utiliser e-Box',
+                'error' => 'Strong authentication required',
+                'message' => 'A Belgian identity (CBE/NRN) is required to use e-Box',
             ], 401);
         }
         
-        // Validation de l'identité
+        // Validate identity
         try {
             $identity = new BelgianIdentity(
                 $user->belgian_identity,
@@ -34,12 +34,12 @@ class VerifyBelgianIdentity
                 $user->name
             );
             
-            // Ajout de l'identité au request pour utilisation ultérieure
+            // Add identity to request for later use
             $request->attributes->set('belgian_identity', $identity);
             
         } catch (\InvalidArgumentException $e) {
             return response()->json([
-                'error' => 'Identité invalide',
+                'error' => 'Invalid identity',
                 'message' => $e->getMessage(),
             ], 400);
         }

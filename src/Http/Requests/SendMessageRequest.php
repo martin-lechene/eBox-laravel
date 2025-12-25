@@ -34,12 +34,12 @@ class SendMessageRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'sender_identifier.required' => 'L\'identifiant de l\'expéditeur est requis',
-            'sender_type.required' => 'Le type d\'identité de l\'expéditeur est requis',
-            'recipient_identifier.required' => 'L\'identifiant du destinataire est requis',
-            'recipient_type.required' => 'Le type d\'identité du destinataire est requis',
-            'subject.required' => 'Le sujet du message est requis',
-            'body.required' => 'Le contenu du message est requis',
+            'sender_identifier.required' => 'Sender identifier is required',
+            'sender_type.required' => 'Sender identity type is required',
+            'recipient_identifier.required' => 'Recipient identifier is required',
+            'recipient_type.required' => 'Recipient identity type is required',
+            'subject.required' => 'Message subject is required',
+            'body.required' => 'Message content is required',
         ];
     }
 }
