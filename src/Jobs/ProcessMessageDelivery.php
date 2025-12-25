@@ -34,7 +34,7 @@ class ProcessMessageDelivery implements ShouldQueue
         $message = EboxMessage::findOrFail($this->messageId);
         
         if ($message->status->value !== 'draft') {
-            Log::warning("Message déjà traité", ['message_id' => $this->messageId]);
+            Log::warning("Message already processed", ['message_id' => $this->messageId]);
             return;
         }
         
@@ -57,13 +57,13 @@ class ProcessMessageDelivery implements ShouldQueue
             );
             
         } catch (\Exception $e) {
-            Log::error("Échec de l'envoi du message e-Box", [
+            Log::error("e-Box message sending failed", [
                 'message_id' => $this->messageId,
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
             
-            // Réessayer le job
+            // Retry the job
             $this->fail($e);
         }
     }
@@ -82,7 +82,7 @@ class ProcessMessageDelivery implements ShouldQueue
             ]);
         }
         
-        Log::critical("Job d'envoi e-Box échoué", [
+        Log::critical("e-Box sending job failed", [
             'message_id' => $this->messageId,
             'attempts' => $this->attempts(),
             'error' => $exception->getMessage(),
