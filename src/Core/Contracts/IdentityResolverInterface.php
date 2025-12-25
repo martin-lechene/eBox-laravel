@@ -6,22 +6,22 @@ use Ebox\Enterprise\Core\ValueObjects\BelgianIdentity;
 use Ebox\Enterprise\Core\Enums\IdentityType;
 
 /**
- * Interface pour la résolution des identités belges
+ * Interface for Belgian identity resolution
  */
 interface IdentityResolverInterface
 {
     /**
-     * Résolution d'une identité belge (CBE/NRN)
+     * Resolve a Belgian identity (CBE/NRN)
      */
     public function resolve(string $identifier, IdentityType $type): ?BelgianIdentity;
     
     /**
-     * Validation d'une identité belge
+     * Validate a Belgian identity
      */
     public function validate(string $identifier, IdentityType $type): bool;
     
     /**
-     * Récupération des informations complètes d'une identité
+     * Get complete identity information
      */
     public function getIdentityInfo(string $identifier, IdentityType $type): array;
 }

@@ -3,7 +3,7 @@
 namespace Ebox\Enterprise\Core\ValueObjects;
 
 /**
- * Value Object pour les métadonnées des messages e-Box
+ * Value Object for e-Box message metadata
  */
 class MessageMetadata
 {

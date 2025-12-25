@@ -3,18 +3,18 @@
 namespace Ebox\Enterprise\Core\Enums;
 
 /**
- * Types d'identités belges supportées par e-Box
+ * Belgian identity types supported by e-Box
  */
 enum IdentityType: string
 {
-    case CBE = 'CBE';  // Numéro d'entreprise (10 chiffres)
-    case NRN = 'NRN';  // Numéro national (11 chiffres)
+    case CBE = 'CBE';  // Company number (10 digits)
+    case NRN = 'NRN';  // National register number (11 digits)
     
     public function description(): string
     {
         return match($this) {
-            self::CBE => 'Numéro d\'entreprise belge (10 chiffres)',
-            self::NRN => 'Numéro national de registre (11 chiffres)',
+            self::CBE => 'Belgian company number (10 digits)',
+            self::NRN => 'National register number (11 digits)',
         };
     }
     

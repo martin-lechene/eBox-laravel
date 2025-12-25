@@ -3,7 +3,7 @@
 namespace Ebox\Enterprise\Core\Exceptions;
 
 /**
- * Exception levée lors d'un échec de livraison de message
+ * Exception thrown when message delivery fails
  */
 class MessageDeliveryException extends EboxException
 {

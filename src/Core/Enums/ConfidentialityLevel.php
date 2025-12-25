@@ -3,7 +3,7 @@
 namespace Ebox\Enterprise\Core\Enums;
 
 /**
- * Niveaux de confidentialité conformes à la documentation e-Box
+ * Confidentiality levels compliant with e-Box documentation
  */
 enum ConfidentialityLevel: string
 {
@@ -14,9 +14,9 @@ enum ConfidentialityLevel: string
     public function description(): string
     {
         return match($this) {
-            self::STANDARD => 'Confidentialité standard avec passage par serveurs tiers',
-            self::HIGH => 'Confidentialité élevée avec chiffrement de bout en bout',
-            self::MAXIMUM => 'Confidentialité maximale sans passage par serveurs tiers',
+            self::STANDARD => 'Standard confidentiality with third-party server routing',
+            self::HIGH => 'High confidentiality with end-to-end encryption',
+            self::MAXIMUM => 'Maximum confidentiality without third-party server routing',
         };
     }
     

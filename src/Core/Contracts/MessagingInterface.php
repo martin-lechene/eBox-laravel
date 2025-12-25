@@ -6,17 +6,17 @@ use Ebox\Enterprise\Models\EboxMessage;
 use Ebox\Enterprise\Core\Enums\IntegrationProfile;
 
 /**
- * Interface pour le service de messagerie e-Box
+ * Interface for e-Box messaging service
  */
 interface MessagingInterface
 {
     /**
-     * Envoi d'un message selon les profils d'intégration e-Box
+     * Send a message according to e-Box integration profiles
      */
     public function sendMessage(array $messageData, IntegrationProfile $profile): EboxMessage;
     
     /**
-     * Récupération du statut d'un message
+     * Retrieve message status
      */
     public function getMessageStatus(string $messageId): array;
 }

@@ -6,8 +6,8 @@ use Ebox\Enterprise\Core\Enums\IdentityType;
 use Ebox\Enterprise\Core\Exceptions\InvalidIdentityException;
 
 /**
- * Value Object pour les identifiants belges (CBE/NRN)
- * Conforme à la documentation e-Box sur l'authentification forte
+ * Value Object for Belgian identifiers (CBE/NRN)
+ * Compliant with e-Box documentation on strong authentication
  */
 class BelgianIdentity
 {
@@ -27,13 +27,13 @@ class BelgianIdentity
     private function validateIdentifier(string $identifier, IdentityType $type): void
     {
         $pattern = match($type) {
-            IdentityType::CBE => '/^\d{10}$/', // CBE: 10 chiffres
-            IdentityType::NRN => '/^\d{11}$/', // NRN: 11 chiffres
+            IdentityType::CBE => '/^\d{10}$/', // CBE: 10 digits
+            IdentityType::NRN => '/^\d{11}$/', // NRN: 11 digits
         };
         
         if (!preg_match($pattern, $identifier)) {
             throw new InvalidIdentityException(
-                "Identifiant {$type->value} invalide: {$identifier}"
+                "Invalid {$type->value} identifier: {$identifier}"
             );
         }
     }

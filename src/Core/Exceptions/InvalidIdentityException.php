@@ -3,7 +3,7 @@
 namespace Ebox\Enterprise\Core\Exceptions;
 
 /**
- * Exception levée lorsqu'une identité belge est invalide
+ * Exception thrown when a Belgian identity is invalid
  */
 class InvalidIdentityException extends EboxException
 {
