@@ -3,7 +3,7 @@
 namespace Ebox\Enterprise\Core\Enums;
 
 /**
- * Conforme à la documentation e-Box : deux profils d'intégration
+ * Compliant with e-Box documentation: two integration profiles
  */
 enum IntegrationProfile: string
 {
@@ -13,8 +13,8 @@ enum IntegrationProfile: string
     public function description(): string
     {
         return match($this) {
-            self::CENTRAL_REGISTRY => 'Utilise le registre de messages centralisé e-Box',
-            self::PRIVATE_REGISTRY => 'Configure un registre de messages privé pour confidentialité maximale',
+            self::CENTRAL_REGISTRY => 'Uses the centralized e-Box message registry',
+            self::PRIVATE_REGISTRY => 'Configures a private message registry for maximum confidentiality',
         };
     }
     

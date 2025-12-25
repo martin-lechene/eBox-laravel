@@ -3,7 +3,7 @@
 namespace Ebox\Enterprise\Core\Enums;
 
 /**
- * Statuts des messages conformes à l'API e-Box
+ * Message statuses compliant with e-Box API
  */
 enum MessageStatus: string
 {
@@ -17,12 +17,12 @@ enum MessageStatus: string
     public function label(): string
     {
         return match($this) {
-            self::DRAFT => 'Brouillon',
-            self::SENT => 'Envoyé',
-            self::DELIVERED => 'Délivré',
-            self::READ => 'Lu',
-            self::FAILED => 'Échec',
-            self::ARCHIVED => 'Archivé',
+            self::DRAFT => 'Draft',
+            self::SENT => 'Sent',
+            self::DELIVERED => 'Delivered',
+            self::READ => 'Read',
+            self::FAILED => 'Failed',
+            self::ARCHIVED => 'Archived',
         };
     }
     
