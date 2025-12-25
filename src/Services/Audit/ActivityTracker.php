@@ -6,12 +6,12 @@ use Ebox\Enterprise\Models\MessageAuditLog;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Service de suivi d'activité pour l'audit e-Box
+ * Activity tracking service for e-Box audit
  */
 class ActivityTracker
 {
     /**
-     * Récupération des activités récentes
+     * Get recent activities
      */
     public function getRecentActivities(int $limit = 50): array
     {
@@ -33,7 +33,7 @@ class ActivityTracker
     }
     
     /**
-     * Statistiques d'activité par période
+     * Activity statistics by period
      */
     public function getActivityStats(string $startDate, string $endDate): array
     {

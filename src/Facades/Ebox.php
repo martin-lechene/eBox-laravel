@@ -8,7 +8,7 @@ use Ebox\Enterprise\Models\EboxMessage;
 use Ebox\Enterprise\Core\Enums\IntegrationProfile;
 
 /**
- * Facade pour le service e-Box
+ * Facade for e-Box service
  *
  * @method static EboxMessage sendMessage(array $messageData, IntegrationProfile $profile)
  * @method static array getMessageStatus(string $messageId)

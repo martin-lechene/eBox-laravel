@@ -11,10 +11,10 @@ class NotifyMessageStatus
 {
     public function handleDelivered(MessageDelivered $event): void
     {
-        // Envoi de notification si configuré
+        // Send notification if configured
         if (config('ebox.webhooks.enabled', true)) {
-            // Log pour webhook
-            Log::info("Message délivré", [
+            // Log for webhook
+            Log::info("Message delivered", [
                 'message_id' => $event->message->id,
                 'external_id' => $event->message->external_message_id,
             ]);
@@ -23,9 +23,9 @@ class NotifyMessageStatus
     
     public function handleRead(MessageRead $event): void
     {
-        // Envoi de notification si configuré
+        // Send notification if configured
         if (config('ebox.webhooks.enabled', true)) {
-            Log::info("Message lu", [
+            Log::info("Message read", [
                 'message_id' => $event->message->id,
                 'external_id' => $event->message->external_message_id,
             ]);

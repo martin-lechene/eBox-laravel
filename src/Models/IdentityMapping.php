@@ -5,7 +5,7 @@ namespace Ebox\Enterprise\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Modèle pour le mapping des identités belges
+ * Model for Belgian identity mapping
  */
 class IdentityMapping extends Model
 {

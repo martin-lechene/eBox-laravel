@@ -5,7 +5,7 @@ namespace Ebox\Enterprise\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Modèle pour les logs d'audit des messages e-Box
+ * Model for e-Box message audit logs
  */
 class MessageAuditLog extends Model
 {

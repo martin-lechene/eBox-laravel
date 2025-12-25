@@ -6,12 +6,12 @@ use Ebox\Enterprise\Models\EboxMessage;
 use Ebox\Enterprise\Core\Enums\MessageStatus;
 
 /**
- * Service pour la gestion des statuts de messages
+ * Service for message status management
  */
 class MessageStatusService
 {
     /**
-     * Mise à jour du statut d'un message
+     * Update message status
      */
     public function updateStatus(EboxMessage $message, MessageStatus $status, array $metadata = []): bool
     {
@@ -32,7 +32,7 @@ class MessageStatusService
     }
     
     /**
-     * Récupération de l'historique des statuts
+     * Get status history
      */
     public function getStatusHistory(EboxMessage $message): array
     {

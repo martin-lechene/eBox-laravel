@@ -7,12 +7,12 @@ use Ebox\Enterprise\Models\MessageAuditLog;
 use Illuminate\Support\Facades\Request;
 
 /**
- * Service de logging d'audit pour e-Box
+ * Audit logging service for e-Box
  */
 class AuditLogger
 {
     /**
-     * Log de l'envoi d'un message
+     * Log message sent
      */
     public function logMessageSent(EboxMessage $message, array $details = []): void
     {
@@ -20,7 +20,7 @@ class AuditLogger
     }
     
     /**
-     * Log de la délivrance d'un message
+     * Log message delivered
      */
     public function logMessageDelivered(EboxMessage $message, array $details = []): void
     {
@@ -28,7 +28,7 @@ class AuditLogger
     }
     
     /**
-     * Log de la lecture d'un message
+     * Log message read
      */
     public function logMessageRead(EboxMessage $message, array $details = []): void
     {
@@ -36,7 +36,7 @@ class AuditLogger
     }
     
     /**
-     * Log de vérification de statut
+     * Log status check
      */
     public function logStatusCheck(EboxMessage $message, array $details = []): void
     {
@@ -44,7 +44,7 @@ class AuditLogger
     }
     
     /**
-     * Log générique
+     * Generic log
      */
     private function log(EboxMessage $message, string $action, array $details = []): void
     {

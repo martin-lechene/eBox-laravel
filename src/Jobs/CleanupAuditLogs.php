@@ -21,7 +21,7 @@ class CleanupAuditLogs implements ShouldQueue
         
         $deleted = MessageAuditLog::where('created_at', '<', $cutoffDate)->delete();
         
-        \Log::info("Nettoyage des logs d'audit", [
+        \Log::info("Audit logs cleanup", [
             'deleted_count' => $deleted,
             'cutoff_date' => $cutoffDate->toDateString(),
         ]);

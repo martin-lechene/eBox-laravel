@@ -5,7 +5,7 @@ namespace Ebox\Enterprise\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Modèle pour les registres de messages e-Box
+ * Model for e-Box message registries
  */
 class MessageRegistry extends Model
 {
