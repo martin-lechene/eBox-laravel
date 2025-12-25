@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Route;
 | Web Routes for e-Box Enterprise
 |--------------------------------------------------------------------------
 |
-| Routes web pour le package e-Box (si nécessaire)
+| Web routes for the e-Box package (if needed)
 |
 */
 
-// Routes web peuvent être ajoutées ici si nécessaire
+// Web routes can be added here if needed
 
