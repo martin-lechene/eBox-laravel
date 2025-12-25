@@ -3,11 +3,11 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Configuration e-Box Enterprise
+    | e-Box Enterprise Configuration
     |--------------------------------------------------------------------------
     |
-    | Configuration principale du package e-Box pour Laravel
-    | Conforme à la documentation technique de dev.eboxenterprise.be
+    | Main configuration for the e-Box Laravel package
+    | Compliant with the technical documentation at dev.eboxenterprise.be
     |
     */
     
@@ -15,23 +15,23 @@ return [
     
     /*
     |--------------------------------------------------------------------------
-    | Profil d'intégration par défaut
+    | Default Integration Profile
     |--------------------------------------------------------------------------
     |
-    | central: Utilise le registre de messages centralisé e-Box
-    | private: Configure un registre de messages privé pour confidentialité maximale
+    | central: Uses the centralized e-Box message registry
+    | private: Configures a private message registry for maximum confidentiality
     |
     */
     'default_integration_profile' => env('EBOX_INTEGRATION_PROFILE', 'central'),
     
     /*
     |--------------------------------------------------------------------------
-    | Configuration des registres
+    | Registry Configuration
     |--------------------------------------------------------------------------
     */
     'registries' => [
         'central' => [
-            'name' => 'Registre Central e-Box',
+            'name' => 'e-Box Central Registry',
             'endpoint' => env('EBOX_CENTRAL_ENDPOINT', 'https://api.eboxenterprise.be/v1'),
             'api_key' => env('EBOX_CENTRAL_API_KEY'),
             'api_secret' => env('EBOX_CENTRAL_API_SECRET'),
@@ -47,7 +47,7 @@ return [
     
     /*
     |--------------------------------------------------------------------------
-    | Configuration de confidentialité
+    | Confidentiality Configuration
     |--------------------------------------------------------------------------
     */
     'confidentiality' => [
@@ -55,15 +55,15 @@ return [
         
         'levels' => [
             'standard' => [
-                'description' => 'Confidentialité standard avec passage par serveurs tiers',
+                'description' => 'Standard confidentiality with third-party server routing',
                 'encryption' => 'optional',
             ],
             'high' => [
-                'description' => 'Confidentialité élevée avec chiffrement de bout en bout',
+                'description' => 'High confidentiality with end-to-end encryption',
                 'encryption' => 'required',
             ],
             'maximum' => [
-                'description' => 'Confidentialité maximale sans passage par serveurs tiers',
+                'description' => 'Maximum confidentiality without third-party server routing',
                 'encryption' => 'required',
                 'requires_private_registry' => true,
             ],
@@ -72,19 +72,19 @@ return [
     
     /*
     |--------------------------------------------------------------------------
-    | Configuration de l'audit
+    | Audit Configuration
     |--------------------------------------------------------------------------
     */
     'audit' => [
         'enabled' => env('EBOX_AUDIT_ENABLED', true),
-        'retention_days' => env('EBOX_AUDIT_RETENTION_DAYS', 365 * 5), // 5 ans
+        'retention_days' => env('EBOX_AUDIT_RETENTION_DAYS', 365 * 5), // 5 years
         'log_read_events' => env('EBOX_LOG_READ_EVENTS', true),
         'log_status_checks' => env('EBOX_LOG_STATUS_CHECKS', true),
     ],
     
     /*
     |--------------------------------------------------------------------------
-    | Configuration des files d'attente
+    | Queue Configuration
     |--------------------------------------------------------------------------
     */
     'queue' => [
@@ -97,7 +97,7 @@ return [
     
     /*
     |--------------------------------------------------------------------------
-    | Configuration des webhooks
+    | Webhooks Configuration
     |--------------------------------------------------------------------------
     */
     'webhooks' => [
@@ -113,7 +113,7 @@ return [
     
     /*
     |--------------------------------------------------------------------------
-    | Validation des identifiants
+    | Identifier Validation
     |--------------------------------------------------------------------------
     */
     'validation' => [
@@ -145,13 +145,13 @@ return [
     */
     'cache' => [
         'enabled' => env('EBOX_CACHE_ENABLED', true),
-        'ttl' => env('EBOX_CACHE_TTL', 3600), // 1 heure
-        'identity_ttl' => env('EBOX_IDENTITY_CACHE_TTL', 86400), // 24 heures
+        'ttl' => env('EBOX_CACHE_TTL', 3600), // 1 hour
+        'identity_ttl' => env('EBOX_IDENTITY_CACHE_TTL', 86400), // 24 hours
     ],
     
     /*
     |--------------------------------------------------------------------------
-    | API CBE (Crossroads Bank for Enterprises)
+    | CBE API (Crossroads Bank for Enterprises)
     |--------------------------------------------------------------------------
     */
     'cbe_api_endpoint' => env('EBOX_CBE_API_ENDPOINT', 'https://api.cbe.be/v1'),
