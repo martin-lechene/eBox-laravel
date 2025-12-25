@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('actor_identifier', 50)->nullable();
             $table->enum('actor_type', ['CBE', 'NRN', 'system'])->nullable();
             
-            // Données de l'audit
+            // Audit data
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->json('details')->nullable();

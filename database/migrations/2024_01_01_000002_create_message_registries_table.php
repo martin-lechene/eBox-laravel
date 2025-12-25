@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('api_key', 255)->nullable();
             $table->string('api_secret', 255)->nullable();
             
-            // Configuration de confidentialité
+            // Confidentiality configuration
             $table->boolean('supports_high_confidentiality')->default(false);
             $table->boolean('supports_private_registry')->default(false);
             
-            // Métadonnées
+            // Metadata
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true);
             $table->tinyInteger('priority')->default(1);

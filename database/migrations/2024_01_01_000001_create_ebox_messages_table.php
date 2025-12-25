@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('ebox_messages', function (Blueprint $table) {
             $table->uuid('id')->primary();
             
-            // Identifiants belges (CBE/NRN) - Authentification forte
+            // Belgian identifiers (CBE/NRN) - Strong authentication
             $table->string('sender_identifier', 50);
             $table->enum('sender_type', ['CBE', 'NRN']);
             $table->string('sender_name', 255)->nullable();
@@ -20,28 +20,28 @@ return new class extends Migration
             $table->enum('recipient_type', ['CBE', 'NRN']);
             $table->string('recipient_name', 255)->nullable();
             
-            // Contenu du message
+            // Message content
             $table->string('subject', 500);
             $table->longText('body');
             $table->string('message_type', 50)->default('official');
             
-            // Confidentialité (décentralisée & confidentielle)
+            // Confidentiality (decentralized & confidential)
             $table->enum('confidentiality_level', ['standard', 'high', 'maximum'])->default('standard');
             
-            // Référence au registre (conforme aux profils d'intégration)
+            // Registry reference (compliant with integration profiles)
             $table->unsignedBigInteger('message_registry_id')->nullable();
             $table->string('registry_endpoint', 500)->nullable();
             
-            // Statuts (auditable)
+            // Statuses (auditable)
             $table->enum('status', ['draft', 'sent', 'delivered', 'read', 'failed', 'archived'])->default('draft');
             $table->timestamp('status_updated_at')->nullable();
             $table->timestamp('read_at')->nullable();
             $table->timestamp('delivered_at')->nullable();
             
-            // ID externe dans le registre e-Box
+            // External ID in e-Box registry
             $table->string('external_message_id', 255)->nullable()->unique();
             
-            // Métadonnées et chiffrement pour confidentialité maximale
+            // Metadata and encryption for maximum confidentiality
             $table->json('metadata')->nullable();
             $table->string('encryption_key_id', 255)->nullable();
             
@@ -49,7 +49,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             
-            // Index pour performance
+            // Indexes for performance
             $table->index(['sender_identifier', 'sender_type']);
             $table->index(['recipient_identifier', 'recipient_type']);
             $table->index('status');
@@ -57,7 +57,7 @@ return new class extends Migration
             $table->index('external_message_id');
             $table->index('created_at');
             
-            // Clé étrangère
+            // Foreign key
             $table->foreign('message_registry_id')
                   ->references('id')
                   ->on('message_registries')

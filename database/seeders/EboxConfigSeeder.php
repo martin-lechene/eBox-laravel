@@ -9,31 +9,31 @@ class EboxConfigSeeder extends Seeder
 {
     public function run(): void
     {
-        // Registre central par défaut
+        // Default central registry
         MessageRegistry::create([
-            'name' => 'Registre Central e-Box',
+            'name' => 'e-Box Central Registry',
             'type' => 'central',
             'endpoint_url' => config('ebox.registries.central.endpoint', 'https://api.eboxenterprise.be/v1'),
             'api_key' => config('ebox.registries.central.api_key'),
             'api_secret' => config('ebox.registries.central.api_secret'),
             'supports_high_confidentiality' => false,
             'supports_private_registry' => false,
-            'description' => 'Registre de messages centralisé e-Box',
+            'description' => 'Centralized e-Box message registry',
             'is_active' => true,
             'priority' => 1,
         ]);
         
-        // Registre privé si configuré
+        // Private registry if configured
         if (config('ebox.registries.private.enabled', false)) {
             MessageRegistry::create([
-                'name' => 'Registre Privé',
+                'name' => 'Private Registry',
                 'type' => 'private',
                 'endpoint_url' => config('ebox.registries.private.endpoint'),
                 'api_key' => config('ebox.registries.private.api_key'),
                 'api_secret' => config('ebox.registries.private.api_secret'),
                 'supports_high_confidentiality' => true,
                 'supports_private_registry' => true,
-                'description' => 'Registre de messages privé pour confidentialité maximale',
+                'description' => 'Private message registry for maximum confidentiality',
                 'is_active' => true,
                 'priority' => 1,
             ]);

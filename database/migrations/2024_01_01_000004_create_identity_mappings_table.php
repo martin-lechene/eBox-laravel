@@ -17,12 +17,12 @@ return new class extends Migration
             $table->string('phone', 50)->nullable();
             $table->text('address')->nullable();
             
-            // Métadonnées de validation
+            // Validation metadata
             $table->boolean('is_validated')->default(false);
             $table->timestamp('validated_at')->nullable();
             $table->timestamp('last_verified_at')->nullable();
             
-            // Cache des informations
+            // Information cache
             $table->json('cached_data')->nullable();
             
             $table->timestamps();
