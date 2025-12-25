@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 
 /**
- * Service de lookup CBE (Crossroads Bank for Enterprises)
+ * CBE (Crossroads Bank for Enterprises) lookup service
  */
 class CbeLookupService
 {
@@ -19,7 +19,7 @@ class CbeLookupService
     }
     
     /**
-     * Recherche d'une entreprise par CBE
+     * Lookup an enterprise by CBE number
      */
     public function lookup(string $cbeNumber): ?array
     {
@@ -35,7 +35,7 @@ class CbeLookupService
                     if ($response->successful()) {
                         $data = $response->json();
                         
-                        // Mise à jour du cache local
+                        // Update local cache
                         IdentityMapping::updateOrCreate(
                             [
                                 'identifier' => $cbeNumber,
@@ -51,7 +51,7 @@ class CbeLookupService
                         return $data;
                     }
                 } catch (\Exception $e) {
-                    \Log::warning("Erreur lors du lookup CBE", [
+                    \Log::warning("CBE lookup error", [
                         'cbe' => $cbeNumber,
                         'error' => $e->getMessage(),
                     ]);

@@ -9,12 +9,12 @@ use Ebox\Enterprise\Models\IdentityMapping;
 use Ebox\Enterprise\Core\Exceptions\IdentityNotFoundException;
 
 /**
- * Service de résolution des identités belges
+ * Belgian identity resolution service
  */
 class IdentityResolverService implements IdentityResolverInterface
 {
     /**
-     * Résolution d'une identité belge (CBE/NRN)
+     * Resolve a Belgian identity (CBE/NRN)
      */
     public function resolve(string $identifier, IdentityType $type): ?BelgianIdentity
     {
@@ -34,7 +34,7 @@ class IdentityResolverService implements IdentityResolverInterface
     }
     
     /**
-     * Validation d'une identité belge
+     * Validate a Belgian identity
      */
     public function validate(string $identifier, IdentityType $type): bool
     {
@@ -43,7 +43,7 @@ class IdentityResolverService implements IdentityResolverInterface
     }
     
     /**
-     * Récupération des informations complètes d'une identité
+     * Get complete identity information
      */
     public function getIdentityInfo(string $identifier, IdentityType $type): array
     {
