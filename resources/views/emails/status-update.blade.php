@@ -5,19 +5,19 @@
     <title>Mise à jour du statut e-Box</title>
 </head>
 <body>
-    <h1>Mise à jour du statut</h1>
+    <h1>Status update</h1>
     
-    <p>Bonjour,</p>
+    <p>Hello,</p>
     
-    <p>Le statut de votre message e-Box a été mis à jour :</p>
+    <p>The status of your e-Box message has been updated:</p>
     
     <ul>
-        <li><strong>Message ID :</strong> {{ $message->external_message_id ?? $message->id }}</li>
-        <li><strong>Nouveau statut :</strong> {{ $status }}</li>
-        <li><strong>Date :</strong> {{ now()->format('d/m/Y H:i') }}</li>
+        <li><strong>Message ID:</strong> {{ $message->external_message_id ?? $message->id }}</li>
+        <li><strong>New status:</strong> {{ $status }}</li>
+        <li><strong>Date:</strong> {{ now()->format('d/m/Y H:i') }}</li>
     </ul>
     
-    <p>Cordialement,<br>L'équipe e-Box</p>
+    <p>Best regards,<br>The e-Box team</p>
 </body>
 </html>
 

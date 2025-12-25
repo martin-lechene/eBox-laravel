@@ -5,21 +5,21 @@
     <title>Notification e-Box</title>
 </head>
 <body>
-    <h1>Nouveau message e-Box</h1>
+    <h1>New e-Box message</h1>
     
-    <p>Bonjour,</p>
+    <p>Hello,</p>
     
-    <p>Vous avez reçu un nouveau message via e-Box :</p>
+    <p>You have received a new message via e-Box:</p>
     
     <ul>
-        <li><strong>Expéditeur :</strong> {{ $message->sender_name ?? $message->sender_identifier }}</li>
-        <li><strong>Sujet :</strong> {{ $message->subject }}</li>
-        <li><strong>Date :</strong> {{ $message->created_at->format('d/m/Y H:i') }}</li>
+        <li><strong>Sender:</strong> {{ $message->sender_name ?? $message->sender_identifier }}</li>
+        <li><strong>Subject:</strong> {{ $message->subject }}</li>
+        <li><strong>Date:</strong> {{ $message->created_at->format('d/m/Y H:i') }}</li>
     </ul>
     
-    <p>Vous pouvez consulter ce message dans votre boîte e-Box.</p>
+    <p>You can view this message in your e-Box inbox.</p>
     
-    <p>Cordialement,<br>L'équipe e-Box</p>
+    <p>Best regards,<br>The e-Box team</p>
 </body>
 </html>
 
