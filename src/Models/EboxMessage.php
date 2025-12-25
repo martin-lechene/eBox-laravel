@@ -9,7 +9,7 @@ use Ebox\Enterprise\Core\Enums\ConfidentialityLevel;
 use Ramsey\Uuid\Uuid;
 
 /**
- * Modèle principal pour les messages e-Box
+ * Main model for e-Box messages
  */
 class EboxMessage extends Model
 {

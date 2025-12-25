@@ -5,7 +5,7 @@ namespace Ebox\Enterprise\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Modèle pour les échecs de livraison de messages
+ * Model for message delivery failures
  */
 class FailedMessageDelivery extends Model
 {

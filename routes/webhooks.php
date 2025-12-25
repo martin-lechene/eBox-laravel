@@ -8,7 +8,7 @@ use Ebox\Enterprise\Http\Controllers\WebhookController;
 | Webhook Routes for e-Box Enterprise
 |--------------------------------------------------------------------------
 |
-| Routes pour les webhooks e-Box
+| Routes for e-Box webhooks
 |
 */
 
