@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class FailedMessageDelivery extends Model
 {
     protected $table = 'failed_message_deliveries';
-    
+
     protected $fillable = [
         'ebox_message_id',
         'registry_id',
@@ -19,26 +19,25 @@ class FailedMessageDelivery extends Model
         'retry_count',
         'next_retry_at',
     ];
-    
+
     protected $casts = [
         'retry_count' => 'integer',
         'next_retry_at' => 'datetime',
     ];
-    
+
     public function message()
     {
         return $this->belongsTo(EboxMessage::class, 'ebox_message_id');
     }
-    
+
     public function registry()
     {
         return $this->belongsTo(MessageRegistry::class, 'registry_id');
     }
-    
+
     public function scopeRetryable($query)
     {
         return $query->where('next_retry_at', '<=', now())
-                    ->where('retry_count', '<', 3);
+            ->where('retry_count', '<', 3);
     }
 }
-

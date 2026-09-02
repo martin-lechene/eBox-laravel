@@ -2,8 +2,8 @@
 
 namespace Ebox\Enterprise\Services\Messaging;
 
-use Ebox\Enterprise\Models\EboxMessage;
 use Ebox\Enterprise\Core\Enums\MessageStatus;
+use Ebox\Enterprise\Models\EboxMessage;
 
 /**
  * Service for message status management
@@ -19,18 +19,18 @@ class MessageStatusService
             'status' => $status,
             'status_updated_at' => now(),
         ];
-        
-        if ($status === MessageStatus::DELIVERED && !$message->delivered_at) {
+
+        if ($status === MessageStatus::DELIVERED && ! $message->delivered_at) {
             $updateData['delivered_at'] = now();
         }
-        
-        if ($status === MessageStatus::READ && !$message->read_at) {
+
+        if ($status === MessageStatus::READ && ! $message->read_at) {
             $updateData['read_at'] = now();
         }
-        
+
         return $message->update($updateData);
     }
-    
+
     /**
      * Get status history
      */
@@ -50,4 +50,3 @@ class MessageStatusService
             ->toArray();
     }
 }
-

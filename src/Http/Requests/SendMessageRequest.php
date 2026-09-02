@@ -2,9 +2,8 @@
 
 namespace Ebox\Enterprise\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Ebox\Enterprise\Core\Enums\IdentityType;
 use Ebox\Enterprise\Core\Enums\ConfidentialityLevel;
+use Illuminate\Foundation\Http\FormRequest;
 
 class SendMessageRequest extends FormRequest
 {
@@ -12,7 +11,7 @@ class SendMessageRequest extends FormRequest
     {
         return true;
     }
-    
+
     public function rules(): array
     {
         return [
@@ -25,12 +24,12 @@ class SendMessageRequest extends FormRequest
             'subject' => ['required', 'string', 'max:500'],
             'body' => ['required', 'string'],
             'message_type' => ['nullable', 'string', 'max:50'],
-            'confidentiality_level' => ['nullable', 'in:' . implode(',', array_column(ConfidentialityLevel::cases(), 'value'))],
+            'confidentiality_level' => ['nullable', 'in:'.implode(',', array_column(ConfidentialityLevel::cases(), 'value'))],
             'integration_profile' => ['nullable', 'in:central,private'],
             'metadata' => ['nullable', 'array'],
         ];
     }
-    
+
     public function messages(): array
     {
         return [
@@ -43,4 +42,3 @@ class SendMessageRequest extends FormRequest
         ];
     }
 }
-

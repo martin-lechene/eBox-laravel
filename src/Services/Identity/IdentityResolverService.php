@@ -3,10 +3,10 @@
 namespace Ebox\Enterprise\Services\Identity;
 
 use Ebox\Enterprise\Core\Contracts\IdentityResolverInterface;
-use Ebox\Enterprise\Core\ValueObjects\BelgianIdentity;
 use Ebox\Enterprise\Core\Enums\IdentityType;
-use Ebox\Enterprise\Models\IdentityMapping;
 use Ebox\Enterprise\Core\Exceptions\IdentityNotFoundException;
+use Ebox\Enterprise\Core\ValueObjects\BelgianIdentity;
+use Ebox\Enterprise\Models\IdentityMapping;
 
 /**
  * Belgian identity resolution service
@@ -21,27 +21,28 @@ class IdentityResolverService implements IdentityResolverInterface
         $mapping = IdentityMapping::where('identifier', $identifier)
             ->where('type', $type->value)
             ->first();
-        
-        if (!$mapping) {
+
+        if (! $mapping) {
             return null;
         }
-        
+
         return new BelgianIdentity(
             $identifier,
             $type,
             $mapping->name
         );
     }
-    
+
     /**
      * Validate a Belgian identity
      */
     public function validate(string $identifier, IdentityType $type): bool
     {
         $pattern = $type->pattern();
+
         return preg_match($pattern, $identifier) === 1;
     }
-    
+
     /**
      * Get complete identity information
      */
@@ -50,11 +51,11 @@ class IdentityResolverService implements IdentityResolverInterface
         $mapping = IdentityMapping::where('identifier', $identifier)
             ->where('type', $type->value)
             ->first();
-        
-        if (!$mapping) {
+
+        if (! $mapping) {
             throw new IdentityNotFoundException($identifier, $type->value);
         }
-        
+
         return [
             'identifier' => $mapping->identifier,
             'type' => $mapping->type,
@@ -68,4 +69,3 @@ class IdentityResolverService implements IdentityResolverInterface
         ];
     }
 }
-

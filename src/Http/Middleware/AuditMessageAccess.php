@@ -3,8 +3,9 @@
 namespace Ebox\Enterprise\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
+use Ebox\Enterprise\Models\EboxMessage;
 use Ebox\Enterprise\Services\Audit\AuditLogger;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -13,23 +14,23 @@ use Symfony\Component\HttpFoundation\Response;
 class AuditMessageAccess
 {
     private AuditLogger $auditLogger;
-    
+
     public function __construct(AuditLogger $auditLogger)
     {
         $this->auditLogger = $auditLogger;
     }
-    
+
     public function handle(Request $request, Closure $next): Response
     {
         $response = $next($request);
-        
+
         // Audit after request if it's a message access
         if ($request->routeIs('ebox.messages.show') || $request->routeIs('ebox.messages.*')) {
             $messageId = $request->route('id');
-            
+
             if ($messageId) {
-                $message = \Ebox\Enterprise\Models\EboxMessage::find($messageId);
-                
+                $message = EboxMessage::find($messageId);
+
                 if ($message) {
                     $this->auditLogger->logStatusCheck($message, [
                         'action' => 'message_access',
@@ -39,8 +40,7 @@ class AuditMessageAccess
                 }
             }
         }
-        
+
         return $response;
     }
 }
-

@@ -2,9 +2,9 @@
 
 namespace Ebox\Enterprise\Listeners;
 
-use Ebox\Enterprise\Events\MessageSent;
 use Ebox\Enterprise\Events\MessageDelivered;
 use Ebox\Enterprise\Events\MessageRead;
+use Ebox\Enterprise\Events\MessageSent;
 
 class UpdateMessageTimeline
 {
@@ -13,15 +13,14 @@ class UpdateMessageTimeline
         // Mise à jour de la timeline si nécessaire
         // Par exemple, mise à jour d'un cache ou d'une table de timeline
     }
-    
+
     public function handleDelivered(MessageDelivered $event): void
     {
         // Mise à jour de la timeline
     }
-    
+
     public function handleRead(MessageRead $event): void
     {
         // Mise à jour de la timeline
     }
 }
-

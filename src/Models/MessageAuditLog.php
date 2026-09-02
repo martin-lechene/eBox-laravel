@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Model;
 class MessageAuditLog extends Model
 {
     protected $table = 'message_audit_logs';
-    
+
     public $timestamps = false;
-    
+
     protected $fillable = [
         'ebox_message_id',
         'action',
@@ -22,26 +22,25 @@ class MessageAuditLog extends Model
         'user_agent',
         'details',
     ];
-    
+
     protected $casts = [
         'details' => 'array',
         'created_at' => 'datetime',
     ];
-    
+
     public function message()
     {
         return $this->belongsTo(EboxMessage::class, 'ebox_message_id');
     }
-    
+
     public function scopeByAction($query, string $action)
     {
         return $query->where('action', $action);
     }
-    
+
     public function scopeByActor($query, string $identifier, string $type)
     {
         return $query->where('actor_identifier', $identifier)
-                    ->where('actor_type', $type);
+            ->where('actor_type', $type);
     }
 }
-

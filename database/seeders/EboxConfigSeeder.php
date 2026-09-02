@@ -2,8 +2,8 @@
 
 namespace Ebox\Enterprise\Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Ebox\Enterprise\Models\MessageRegistry;
+use Illuminate\Database\Seeder;
 
 class EboxConfigSeeder extends Seeder
 {
@@ -22,7 +22,7 @@ class EboxConfigSeeder extends Seeder
             'is_active' => true,
             'priority' => 1,
         ]);
-        
+
         // Private registry if configured
         if (config('ebox.registries.private.enabled', false)) {
             MessageRegistry::create([
@@ -40,4 +40,3 @@ class EboxConfigSeeder extends Seeder
         }
     }
 }
-

@@ -9,12 +9,11 @@ use Illuminate\Queue\SerializesModels;
 class MessageRead
 {
     use Dispatchable, SerializesModels;
-    
+
     public EboxMessage $message;
-    
+
     public function __construct(EboxMessage $message)
     {
         $this->message = $message;
     }
 }
-

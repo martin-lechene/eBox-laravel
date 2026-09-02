@@ -7,9 +7,8 @@ namespace Ebox\Enterprise\Core\Exceptions;
  */
 class RegistryNotFoundException extends EboxException
 {
-    public function __construct(string $message = "Registry not found", int $code = 404)
+    public function __construct(string $message = 'Registry not found', int $code = 404)
     {
         parent::__construct($message, $code);
     }
 }
-

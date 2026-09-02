@@ -10,7 +10,7 @@ class StatusInquiryRequest extends FormRequest
     {
         return true;
     }
-    
+
     public function rules(): array
     {
         return [
@@ -18,4 +18,3 @@ class StatusInquiryRequest extends FormRequest
         ];
     }
 }
-

@@ -2,10 +2,10 @@
 
 namespace Ebox\Enterprise\Models;
 
+use Ebox\Enterprise\Core\Enums\ConfidentialityLevel;
+use Ebox\Enterprise\Core\Enums\MessageStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Ebox\Enterprise\Core\Enums\MessageStatus;
-use Ebox\Enterprise\Core\Enums\ConfidentialityLevel;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -14,12 +14,13 @@ use Ramsey\Uuid\Uuid;
 class EboxMessage extends Model
 {
     use SoftDeletes;
-    
+
     protected $table = 'ebox_messages';
-    
+
     protected $keyType = 'string';
+
     public $incrementing = false;
-    
+
     protected $fillable = [
         'sender_identifier',
         'sender_type',
@@ -38,7 +39,7 @@ class EboxMessage extends Model
         'metadata',
         'encryption_key_id',
     ];
-    
+
     protected $casts = [
         'status' => MessageStatus::class,
         'confidentiality_level' => ConfidentialityLevel::class,
@@ -47,50 +48,50 @@ class EboxMessage extends Model
         'delivered_at' => 'datetime',
         'status_updated_at' => 'datetime',
     ];
-    
+
     protected static function boot()
     {
         parent::boot();
-        
+
         static::creating(function ($model) {
             if (empty($model->id)) {
                 $model->id = Uuid::uuid4()->toString();
             }
         });
     }
-    
+
     public function registry()
     {
         return $this->belongsTo(MessageRegistry::class, 'message_registry_id');
     }
-    
+
     public function auditLogs()
     {
         return $this->hasMany(MessageAuditLog::class, 'ebox_message_id');
     }
-    
+
     public function failedDeliveries()
     {
         return $this->hasMany(FailedMessageDelivery::class, 'ebox_message_id');
     }
-    
+
     public function scopeWithHighConfidentiality($query)
     {
         return $query->where('confidentiality_level', ConfidentialityLevel::MAXIMUM);
     }
-    
+
     public function scopeBySender($query, string $identifier, string $type)
     {
         return $query->where('sender_identifier', $identifier)
-                    ->where('sender_type', $type);
+            ->where('sender_type', $type);
     }
-    
+
     public function scopeByRecipient($query, string $identifier, string $type)
     {
         return $query->where('recipient_identifier', $identifier)
-                    ->where('recipient_type', $type);
+            ->where('recipient_type', $type);
     }
-    
+
     public function markAsRead(): bool
     {
         return $this->update([
@@ -99,7 +100,7 @@ class EboxMessage extends Model
             'status_updated_at' => now(),
         ]);
     }
-    
+
     public function markAsDelivered(): bool
     {
         return $this->update([
@@ -109,4 +110,3 @@ class EboxMessage extends Model
         ]);
     }
 }
-

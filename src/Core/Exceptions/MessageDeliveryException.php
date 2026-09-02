@@ -12,4 +12,3 @@ class MessageDeliveryException extends EboxException
         parent::__construct($message, $code, $previous);
     }
 }
-

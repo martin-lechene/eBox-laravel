@@ -4,8 +4,8 @@ namespace Ebox\Enterprise\Listeners;
 
 use Ebox\Enterprise\Events\MessageDelivered;
 use Ebox\Enterprise\Events\MessageRead;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 
 class NotifyMessageStatus
 {
@@ -14,22 +14,21 @@ class NotifyMessageStatus
         // Send notification if configured
         if (config('ebox.webhooks.enabled', true)) {
             // Log for webhook
-            Log::info("Message delivered", [
+            Log::info('Message delivered', [
                 'message_id' => $event->message->id,
                 'external_id' => $event->message->external_message_id,
             ]);
         }
     }
-    
+
     public function handleRead(MessageRead $event): void
     {
         // Send notification if configured
         if (config('ebox.webhooks.enabled', true)) {
-            Log::info("Message read", [
+            Log::info('Message read', [
                 'message_id' => $event->message->id,
                 'external_id' => $event->message->external_message_id,
             ]);
         }
     }
 }
-

@@ -13,10 +13,10 @@ enum MessageStatus: string
     case READ = 'read';
     case FAILED = 'failed';
     case ARCHIVED = 'archived';
-    
+
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::DRAFT => 'Draft',
             self::SENT => 'Sent',
             self::DELIVERED => 'Delivered',
@@ -25,10 +25,9 @@ enum MessageStatus: string
             self::ARCHIVED => 'Archived',
         };
     }
-    
+
     public function isFinal(): bool
     {
         return in_array($this, [self::READ, self::FAILED, self::ARCHIVED]);
     }
 }
-

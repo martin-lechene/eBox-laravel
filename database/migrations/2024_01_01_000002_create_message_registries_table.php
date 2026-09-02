@@ -15,26 +15,25 @@ return new class extends Migration
             $table->string('endpoint_url', 500);
             $table->string('api_key', 255)->nullable();
             $table->string('api_secret', 255)->nullable();
-            
+
             // Confidentiality configuration
             $table->boolean('supports_high_confidentiality')->default(false);
             $table->boolean('supports_private_registry')->default(false);
-            
+
             // Metadata
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true);
             $table->tinyInteger('priority')->default(1);
-            
+
             $table->timestamps();
-            
+
             $table->index(['type', 'is_active']);
             $table->index('priority');
         });
     }
-    
+
     public function down(): void
     {
         Schema::dropIfExists('message_registries');
     }
 };
-

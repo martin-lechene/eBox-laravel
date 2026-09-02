@@ -10,9 +10,9 @@ return [
     | Compliant with the technical documentation at dev.eboxenterprise.be
     |
     */
-    
+
     'version' => '1.0.0',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Default Integration Profile
@@ -23,7 +23,7 @@ return [
     |
     */
     'default_integration_profile' => env('EBOX_INTEGRATION_PROFILE', 'central'),
-    
+
     /*
     |--------------------------------------------------------------------------
     | Registry Configuration
@@ -36,7 +36,7 @@ return [
             'api_key' => env('EBOX_CENTRAL_API_KEY'),
             'api_secret' => env('EBOX_CENTRAL_API_SECRET'),
         ],
-        
+
         'private' => [
             'enabled' => env('EBOX_PRIVATE_REGISTRY_ENABLED', false),
             'endpoint' => env('EBOX_PRIVATE_REGISTRY_ENDPOINT'),
@@ -44,7 +44,7 @@ return [
             'api_secret' => env('EBOX_PRIVATE_REGISTRY_SECRET'),
         ],
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Confidentiality Configuration
@@ -52,7 +52,7 @@ return [
     */
     'confidentiality' => [
         'default_level' => env('EBOX_DEFAULT_CONFIDENTIALITY', 'standard'),
-        
+
         'levels' => [
             'standard' => [
                 'description' => 'Standard confidentiality with third-party server routing',
@@ -69,7 +69,7 @@ return [
             ],
         ],
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Audit Configuration
@@ -81,7 +81,7 @@ return [
         'log_read_events' => env('EBOX_LOG_READ_EVENTS', true),
         'log_status_checks' => env('EBOX_LOG_STATUS_CHECKS', true),
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Queue Configuration
@@ -94,7 +94,7 @@ return [
         'retry_after' => env('EBOX_QUEUE_RETRY_AFTER', 90),
         'tries' => env('EBOX_QUEUE_TRIES', 3),
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Webhooks Configuration
@@ -110,7 +110,7 @@ return [
             'status.updated',
         ],
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Identifier Validation
@@ -126,7 +126,7 @@ return [
             'checksum' => env('EBOX_VALIDATE_NRN_CHECKSUM', true),
         ],
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Routes
@@ -137,7 +137,7 @@ return [
         'middleware' => ['api', 'auth:sanctum'],
         'api_version' => 'v1',
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Cache
@@ -148,12 +148,63 @@ return [
         'ttl' => env('EBOX_CACHE_TTL', 3600), // 1 hour
         'identity_ttl' => env('EBOX_IDENTITY_CACHE_TTL', 86400), // 24 hours
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | CBE API (Crossroads Bank for Enterprises)
     |--------------------------------------------------------------------------
     */
     'cbe_api_endpoint' => env('EBOX_CBE_API_ENDPOINT', 'https://api.cbe.be/v1'),
-];
 
+    /*
+    |--------------------------------------------------------------------------
+    | AS4 / ebMS3 Push Transport
+    |--------------------------------------------------------------------------
+    |
+    | Conforms to the OASIS AS4 profile of ebMS 3.0 (SOAP 1.2, WS-Security
+    | X.509 signatures over eb:MessageInfo, MTOM multipart, gzip payloads).
+    |
+    */
+    'as4' => [
+        'enabled' => env('EBOX_AS4_ENABLED', true),
+
+        'endpoint' => env('EBOX_AS4_ENDPOINT'),
+        'timeout' => (int) env('EBOX_AS4_TIMEOUT', 30),
+        'connect_timeout' => (int) env('EBOX_AS4_CONNECT_TIMEOUT', 10),
+        'verify' => env('EBOX_AS4_VERIFY_SSL', true),
+
+        // Two-way TLS client credentials (PEM files).
+        'client_cert' => env('EBOX_AS4_CLIENT_CERT'),
+        'client_key' => env('EBOX_AS4_CLIENT_KEY'),
+        'key_password' => env('EBOX_AS4_KEY_PASSWORD'),
+
+        // P-Mode parameters.
+        'pmode_id' => env('EBOX_AS4_PMODE_ID', 'ebox-as4-push'),
+
+        'from' => [
+            'id' => env('EBOX_AS4_FROM_ID', 'BE0000000000'),
+            'type' => 'urn:oasis:names:tc:ebcore:partyid-type:unregistered',
+        ],
+        'to' => [
+            'id' => env('EBOX_AS4_TO_ID', 'BE0000000000'),
+            'type' => 'urn:oasis:names:tc:ebcore:partyid-type:unregistered',
+        ],
+
+        'from_role' => 'http://docs.oasis-open.org/ebxml-msg/ebms/v3.0/ns/core/200704/initiator',
+        'to_role' => 'http://docs.oasis-open.org/ebxml-msg/ebms/v3.0/ns/core/200704/responder',
+
+        'service' => env('EBOX_AS4_SERVICE', 'http://docs.oasis-open.org/ebxml-msg/as4/200902/service'),
+        'service_type' => null,
+        'action' => env('EBOX_AS4_ACTION', 'http://docs.oasis-open.org/ebxml-msg/as4/200902/action'),
+
+        'agreement_ref' => null,
+        'agreement_type' => null,
+
+        'compression_type' => env('EBOX_AS4_COMPRESSION', 'application/gzip'),
+
+        'default_mime_type' => 'application/xml',
+        'default_character_set' => 'utf-8',
+
+        'message_properties' => [],
+    ],
+];

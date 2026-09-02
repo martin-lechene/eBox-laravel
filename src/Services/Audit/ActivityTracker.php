@@ -31,7 +31,7 @@ class ActivityTracker
             })
             ->toArray();
     }
-    
+
     /**
      * Activity statistics by period
      */
@@ -45,4 +45,3 @@ class ActivityTracker
             ->toArray();
     }
 }
-

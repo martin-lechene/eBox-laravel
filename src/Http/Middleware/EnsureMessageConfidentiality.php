@@ -3,8 +3,9 @@
 namespace Ebox\Enterprise\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
 use Ebox\Enterprise\Core\Enums\ConfidentialityLevel;
+use Ebox\Enterprise\Models\EboxMessage;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -17,20 +18,20 @@ class EnsureMessageConfidentiality
         // Check if this is a message read request
         if ($request->routeIs('ebox.messages.show')) {
             $messageId = $request->route('id');
-            
+
             if ($messageId) {
-                $message = \Ebox\Enterprise\Models\EboxMessage::find($messageId);
-                
+                $message = EboxMessage::find($messageId);
+
                 if ($message && $message->confidentiality_level === ConfidentialityLevel::MAXIMUM) {
                     // Additional verification for maximum confidentiality
                     $user = $request->user();
-                    
+
                     // Verify that the user is either the sender or the recipient
-                    $isAuthorized = 
+                    $isAuthorized =
                         ($user->belgian_identity === $message->sender_identifier) ||
                         ($user->belgian_identity === $message->recipient_identifier);
-                    
-                    if (!$isAuthorized) {
+
+                    if (! $isAuthorized) {
                         return response()->json([
                             'error' => 'Unauthorized access',
                             'message' => 'This message requires special authorization',
@@ -39,8 +40,7 @@ class EnsureMessageConfidentiality
                 }
             }
         }
-        
+
         return $next($request);
     }
 }
-

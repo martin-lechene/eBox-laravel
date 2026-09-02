@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes for e-Box Enterprise
@@ -12,4 +10,3 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Web routes can be added here if needed
-

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class MessageRegistry extends Model
 {
     protected $table = 'message_registries';
-    
+
     protected $fillable = [
         'name',
         'type',
@@ -23,32 +23,31 @@ class MessageRegistry extends Model
         'is_active',
         'priority',
     ];
-    
+
     protected $casts = [
         'supports_high_confidentiality' => 'boolean',
         'supports_private_registry' => 'boolean',
         'is_active' => 'boolean',
         'priority' => 'integer',
     ];
-    
+
     public function messages()
     {
         return $this->hasMany(EboxMessage::class, 'message_registry_id');
     }
-    
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
     }
-    
+
     public function scopeByType($query, string $type)
     {
         return $query->where('type', $type);
     }
-    
+
     public function scopeWithHighConfidentiality($query)
     {
         return $query->where('supports_high_confidentiality', true);
     }
 }
-

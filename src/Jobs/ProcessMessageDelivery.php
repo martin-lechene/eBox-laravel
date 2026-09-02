@@ -2,42 +2,47 @@
 
 namespace Ebox\Enterprise\Jobs;
 
+use Ebox\Enterprise\Core\Enums\IntegrationProfile;
+use Ebox\Enterprise\Core\Enums\MessageStatus;
+use Ebox\Enterprise\Models\EboxMessage;
+use Ebox\Enterprise\Services\Messaging\EboxMessagingService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Ebox\Enterprise\Models\EboxMessage;
-use Ebox\Enterprise\Services\Messaging\EboxMessagingService;
-use Ebox\Enterprise\Core\Enums\IntegrationProfile;
 use Illuminate\Support\Facades\Log;
 
 class ProcessMessageDelivery implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    
+
     public $tries = 3;
+
     public $backoff = [60, 300, 600]; // Retry after 1, 5, 10 minutes
+
     public $timeout = 120;
-    
+
     private string $messageId;
+
     private string $profile;
-    
+
     public function __construct(string $messageId, string $profile = 'central')
     {
         $this->messageId = $messageId;
         $this->profile = $profile;
     }
-    
+
     public function handle(EboxMessagingService $messagingService): void
     {
         $message = EboxMessage::findOrFail($this->messageId);
-        
+
         if ($message->status->value !== 'draft') {
-            Log::warning("Message already processed", ['message_id' => $this->messageId]);
+            Log::warning('Message already processed', ['message_id' => $this->messageId]);
+
             return;
         }
-        
+
         try {
             $messagingService->sendMessage(
                 [
@@ -55,38 +60,37 @@ class ProcessMessageDelivery implements ShouldQueue
                 ],
                 IntegrationProfile::from($this->profile)
             );
-            
+
         } catch (\Exception $e) {
-            Log::error("e-Box message sending failed", [
+            Log::error('e-Box message sending failed', [
                 'message_id' => $this->messageId,
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-            
+
             // Retry the job
             $this->fail($e);
         }
     }
-    
+
     public function failed(\Throwable $exception): void
     {
         $message = EboxMessage::find($this->messageId);
-        
+
         if ($message) {
-            $message->update(['status' => \Ebox\Enterprise\Core\Enums\MessageStatus::FAILED]);
-            
+            $message->update(['status' => MessageStatus::FAILED]);
+
             $message->failedDeliveries()->create([
                 'error_message' => $exception->getMessage(),
                 'error_code' => $exception->getCode(),
                 'retry_count' => $this->attempts(),
             ]);
         }
-        
-        Log::critical("e-Box sending job failed", [
+
+        Log::critical('e-Box sending job failed', [
             'message_id' => $this->messageId,
             'attempts' => $this->attempts(),
             'error' => $exception->getMessage(),
         ]);
     }
 }
-

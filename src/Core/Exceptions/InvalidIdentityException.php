@@ -12,4 +12,3 @@ class InvalidIdentityException extends EboxException
         parent::__construct($message, $code);
     }
 }
-

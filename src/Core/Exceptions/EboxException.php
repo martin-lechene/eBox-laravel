@@ -11,4 +11,3 @@ class EboxException extends Exception
 {
     //
 }
-

@@ -18,7 +18,7 @@ class AuditLogger
     {
         $this->log($message, 'sent', $details);
     }
-    
+
     /**
      * Log message delivered
      */
@@ -26,7 +26,7 @@ class AuditLogger
     {
         $this->log($message, 'delivered', $details);
     }
-    
+
     /**
      * Log message read
      */
@@ -34,7 +34,7 @@ class AuditLogger
     {
         $this->log($message, 'read', $details);
     }
-    
+
     /**
      * Log status check
      */
@@ -42,16 +42,16 @@ class AuditLogger
     {
         $this->log($message, 'status_check', $details);
     }
-    
+
     /**
      * Generic log
      */
     private function log(EboxMessage $message, string $action, array $details = []): void
     {
-        if (!config('ebox.audit.enabled', true)) {
+        if (! config('ebox.audit.enabled', true)) {
             return;
         }
-        
+
         MessageAuditLog::create([
             'ebox_message_id' => $message->id,
             'action' => $action,
@@ -65,4 +65,3 @@ class AuditLogger
         ]);
     }
 }
-

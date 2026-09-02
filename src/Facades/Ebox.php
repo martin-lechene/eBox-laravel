@@ -2,10 +2,10 @@
 
 namespace Ebox\Enterprise\Facades;
 
-use Illuminate\Support\Facades\Facade;
 use Ebox\Enterprise\Core\Contracts\MessagingInterface;
-use Ebox\Enterprise\Models\EboxMessage;
 use Ebox\Enterprise\Core\Enums\IntegrationProfile;
+use Ebox\Enterprise\Models\EboxMessage;
+use Illuminate\Support\Facades\Facade;
 
 /**
  * Facade for e-Box service
@@ -20,4 +20,3 @@ class Ebox extends Facade
         return MessagingInterface::class;
     }
 }
-

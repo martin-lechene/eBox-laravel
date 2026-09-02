@@ -15,4 +15,3 @@ class IdentityNotFoundException extends EboxException
         );
     }
 }
-

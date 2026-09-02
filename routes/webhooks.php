@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Ebox\Enterprise\Http\Controllers\WebhookController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,4 +14,3 @@ use Ebox\Enterprise\Http\Controllers\WebhookController;
 
 Route::post('/ebox/callback', [WebhookController::class, 'handle'])
     ->name('ebox.webhooks.callback');
-

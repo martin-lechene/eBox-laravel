@@ -3,9 +3,9 @@
 namespace Ebox\Enterprise\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
-use Ebox\Enterprise\Core\ValueObjects\BelgianIdentity;
 use Ebox\Enterprise\Core\Enums\IdentityType;
+use Ebox\Enterprise\Core\ValueObjects\BelgianIdentity;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -18,14 +18,14 @@ class VerifyBelgianIdentity
     {
         // Retrieve identity from authentication token
         $user = $request->user();
-        
-        if (!$user || !$user->belgian_identity) {
+
+        if (! $user || ! $user->belgian_identity) {
             return response()->json([
                 'error' => 'Strong authentication required',
                 'message' => 'A Belgian identity (CBE/NRN) is required to use e-Box',
             ], 401);
         }
-        
+
         // Validate identity
         try {
             $identity = new BelgianIdentity(
@@ -33,18 +33,17 @@ class VerifyBelgianIdentity
                 $user->identity_type === 'company' ? IdentityType::CBE : IdentityType::NRN,
                 $user->name
             );
-            
+
             // Add identity to request for later use
             $request->attributes->set('belgian_identity', $identity);
-            
+
         } catch (\InvalidArgumentException $e) {
             return response()->json([
                 'error' => 'Invalid identity',
                 'message' => $e->getMessage(),
             ], 400);
         }
-        
+
         return $next($request);
     }
 }
-

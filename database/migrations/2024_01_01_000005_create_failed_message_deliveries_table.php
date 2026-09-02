@@ -16,27 +16,26 @@ return new class extends Migration
             $table->text('error_message')->nullable();
             $table->tinyInteger('retry_count')->default(0);
             $table->timestamp('next_retry_at')->nullable();
-            
+
             $table->timestamps();
-            
+
             $table->index('ebox_message_id');
             $table->index('next_retry_at');
-            
+
             $table->foreign('ebox_message_id')
-                  ->references('id')
-                  ->on('ebox_messages')
-                  ->onDelete('cascade');
-                  
+                ->references('id')
+                ->on('ebox_messages')
+                ->onDelete('cascade');
+
             $table->foreign('registry_id')
-                  ->references('id')
-                  ->on('message_registries')
-                  ->onDelete('set null');
+                ->references('id')
+                ->on('message_registries')
+                ->onDelete('set null');
         });
     }
-    
+
     public function down(): void
     {
         Schema::dropIfExists('failed_message_deliveries');
     }
 };
-

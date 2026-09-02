@@ -10,7 +10,7 @@ class RegistrySetupRequest extends FormRequest
     {
         return true;
     }
-    
+
     public function rules(): array
     {
         return [
@@ -27,4 +27,3 @@ class RegistrySetupRequest extends FormRequest
         ];
     }
 }
-

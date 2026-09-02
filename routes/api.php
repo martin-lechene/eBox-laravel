@@ -1,11 +1,10 @@
 <?php
 
+use Ebox\Enterprise\Http\Controllers\Api\V1\MessageController;
+use Ebox\Enterprise\Http\Controllers\Api\V1\RegistryController;
+use Ebox\Enterprise\Http\Controllers\Api\V1\StatusController;
+use Ebox\Enterprise\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
-use Ebox\Enterprise\Http\Controllers\Api\V1\{
-    MessageController,
-    StatusController,
-    RegistryController
-};
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +16,7 @@ use Ebox\Enterprise\Http\Controllers\Api\V1\{
 */
 
 Route::prefix('v1')->middleware(config('ebox.routes.middleware'))->group(function () {
-    
+
     // Messages
     Route::prefix('messages')->group(function () {
         Route::post('/', [MessageController::class, 'send'])->name('ebox.messages.send');
@@ -26,14 +25,14 @@ Route::prefix('v1')->middleware(config('ebox.routes.middleware'))->group(functio
         Route::patch('/{id}/retry', [MessageController::class, 'retry'])->name('ebox.messages.retry');
         Route::delete('/{id}', [MessageController::class, 'delete'])->name('ebox.messages.delete');
     });
-    
+
     // Status (audit)
     Route::prefix('status')->group(function () {
         Route::get('/{messageId}', [StatusController::class, 'getStatus'])->name('ebox.status.get');
         Route::get('/{messageId}/history', [StatusController::class, 'getHistory'])->name('ebox.status.history');
         Route::get('/{messageId}/audit', [StatusController::class, 'getAudit'])->name('ebox.status.audit');
     });
-    
+
     // Registries
     Route::prefix('registries')->group(function () {
         Route::get('/', [RegistryController::class, 'index'])->name('ebox.registries.index');
@@ -42,13 +41,13 @@ Route::prefix('v1')->middleware(config('ebox.routes.middleware'))->group(functio
         Route::delete('/{id}', [RegistryController::class, 'delete'])->name('ebox.registries.delete');
         Route::post('/{id}/test', [RegistryController::class, 'test'])->name('ebox.registries.test');
     });
-    
+
     // Webhooks for e-Box notifications
     Route::prefix('webhooks')->withoutMiddleware(['auth:sanctum'])->group(function () {
-        Route::post('/ebox/callback', [\Ebox\Enterprise\Http\Controllers\WebhookController::class, 'handle'])
+        Route::post('/ebox/callback', [WebhookController::class, 'handle'])
             ->name('ebox.webhooks.callback');
     });
-    
+
     // Service health
     Route::get('/health', function () {
         return response()->json([
@@ -58,4 +57,3 @@ Route::prefix('v1')->middleware(config('ebox.routes.middleware'))->group(functio
         ]);
     })->name('ebox.health');
 });
-

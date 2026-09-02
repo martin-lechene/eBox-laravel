@@ -14,4 +14,3 @@ return [
         'delivery_failed' => 'Échec de l\'envoi du message',
     ],
 ];
-

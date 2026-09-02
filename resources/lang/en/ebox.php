@@ -14,4 +14,3 @@ return [
         'delivery_failed' => 'Message delivery failed',
     ],
 ];
-
