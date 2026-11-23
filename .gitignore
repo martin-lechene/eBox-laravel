@@ -9,7 +9,10 @@ Thumbs.db
 composer.lock
 phpunit.xml
 .phpunit.result.cache
+.phpunit.cache/
+.php-cs-fixer.cache
 .env
-.env.backup
-.env.production
-
+.env.*
+!.env.example
+/build/
+/coverage/
