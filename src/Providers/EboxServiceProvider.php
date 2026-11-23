@@ -15,6 +15,7 @@ use Ebox\Enterprise\Services\Audit\AuditLogger;
 use Ebox\Enterprise\Services\Identity\IdentityResolverService;
 use Ebox\Enterprise\Services\Messaging\CentralRegistryService;
 use Ebox\Enterprise\Services\Messaging\EboxMessagingService;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class EboxServiceProvider extends ServiceProvider
@@ -61,8 +62,10 @@ class EboxServiceProvider extends ServiceProvider
             __DIR__.'/../../database/migrations' => database_path('migrations'),
         ], 'ebox-migrations');
 
-        // Publication des routes
-        $this->loadRoutesFrom(__DIR__.'/../../routes/api.php');
+        // API routes (prefix configurable through ebox.routes.prefix)
+        Route::prefix(config('ebox.routes.prefix', 'api/ebox'))->group(function (): void {
+            $this->loadRoutesFrom(__DIR__.'/../../routes/api.php');
+        });
 
         // Enregistrement des middleware
         $this->app['router']->aliasMiddleware('ebox.identity', VerifyBelgianIdentity::class);

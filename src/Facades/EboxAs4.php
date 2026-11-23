@@ -2,7 +2,7 @@
 
 namespace Ebox\Enterprise\Facades;
 
-use Ebox\Enterprise\As4\As4ClientInterface;
+use Ebox\Enterprise\As4\Contracts\As4ClientInterface;
 use Ebox\Enterprise\As4\EboxAs4Client;
 use Illuminate\Support\Facades\Facade;
 
